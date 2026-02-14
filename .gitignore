@@ -130,9 +130,16 @@ dmypy.json
 
 save/
 wandb/
+# Data asset mounts may be directories or symlinks.
+t2m
 t2m/
-body_models/
+kit
+kit/
+glove
 glove/
+dataset/HumanML3D
+dataset/HumanML3D/
+body_models/
 slurm**/
 *.out
 *.err
