@@ -28,19 +28,28 @@ Clean HumanML3D copy:
 /home/ubuntu/scratch/repos/motion_workspace/mygo_data/datasets/humanml3d/raw/HumanML3D
 ```
 
-Official MDM expects:
+MDM-specific assets, checkpoints, outputs, and generated caches live under:
+
+```text
+/home/ubuntu/scratch/repos/motion_workspace/mygo_data/projects/mdm
+```
+
+Official MDM expects these local paths:
 
 ```text
 dataset/HumanML3D
+glove
+body_models/smpl
+dataset/t2m_train.npy
 ```
 
-Use the helper below to create a local symlink:
+Use the helper below to create local symlinks:
 
 ```bash
-./prepare/mygo_link_humanml3d.sh
+./prepare/mygo_link_workspace.sh
 ```
 
-The symlink is intentionally ignored by git.
+The symlinks are intentionally ignored by git.
 
 ## Environment
 
@@ -52,5 +61,6 @@ Use the project-owned micromamba environment from the `mygo` repo:
 
 ## Patch Log
 
-- `prepare/mygo_link_humanml3d.sh`: link the clean HumanML3D copy into `dataset/HumanML3D`.
-- `.gitignore`: ignore local dataset symlinks/copies such as `dataset/HumanML3D`.
+- `prepare/mygo_link_workspace.sh`: link clean HumanML3D plus MDM-specific assets/cache into the official paths.
+- `model/mdm.py`: load CLIP ViT-B/32 from `mygo_data/projects/mdm/assets/text_encoders/clip` when available.
+- `.gitignore`: ignore local dataset symlinks/copies and generated `dataset/t2m_*.npy` cache files.

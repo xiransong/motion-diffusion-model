@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -137,9 +139,28 @@ class MDM(nn.Module):
     def parameters_wo_clip(self):
         return [p for name, p in self.named_parameters() if not name.startswith('clip_model.')]
 
+    def get_clip_download_root(self, clip_version):
+        env_root = os.environ.get('MYGO_CLIP_DOWNLOAD_ROOT')
+        if env_root:
+            return env_root
+
+        if clip_version != 'ViT-B/32':
+            return None
+
+        repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+        workspace_root = os.path.abspath(os.path.join(repo_root, os.pardir, os.pardir))
+        candidate = os.path.join(workspace_root, 'mygo_data', 'projects', 'mdm', 'assets', 'text_encoders', 'clip')
+        if os.path.exists(os.path.join(candidate, 'ViT-B-32.pt')):
+            return candidate
+
+        return None
+
     def load_and_freeze_clip(self, clip_version):
+        clip_download_root = self.get_clip_download_root(clip_version)
+        if clip_download_root:
+            print(f'Loading CLIP from {clip_download_root}')
         clip_model, clip_preprocess = clip.load(clip_version, device='cpu',
-                                                jit=False)  # Must set jit=False for training
+                                                jit=False, download_root=clip_download_root)  # Must set jit=False for training
         clip.model.convert_weights(
             clip_model)  # Actually this line is unnecessary since clip by default already on float16
 

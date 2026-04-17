@@ -133,6 +133,7 @@ wandb/
 t2m/
 dataset/HumanML3D
 dataset/KIT-ML
+dataset/t2m_*.npy
 body_models/
 body_models/smpl
 glove
