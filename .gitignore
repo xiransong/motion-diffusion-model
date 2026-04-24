@@ -130,6 +130,7 @@ dmypy.json
 
 save/
 wandb/
+t2m
 t2m/
 dataset/HumanML3D
 dataset/KIT-ML

@@ -46,6 +46,10 @@ link_path "${MYGO_MDM_GLOVE_ROOT:-"${DATA_ROOT}/projects/mdm/assets/word_vectors
   "${REPO_ROOT}/glove" \
   "MDM GloVe"
 
+link_path "${MYGO_MDM_T2M_EVALUATOR_ROOT:-"${DATA_ROOT}/projects/mdm/assets/evaluators/t2m"}" \
+  "${REPO_ROOT}/t2m" \
+  "MDM T2M evaluator"
+
 link_path "${MYGO_MDM_SMPL_ROOT:-"${DATA_ROOT}/projects/mdm/assets/body_models/smpl"}" \
   "${REPO_ROOT}/body_models/smpl" \
   "MDM SMPL"

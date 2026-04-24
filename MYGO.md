@@ -39,6 +39,7 @@ Official MDM expects these local paths:
 ```text
 dataset/HumanML3D
 glove
+t2m
 body_models/smpl
 dataset/t2m_train.npy
 ```
@@ -61,6 +62,6 @@ Use the project-owned micromamba environment from the `mygo` repo:
 
 ## Patch Log
 
-- `prepare/mygo_link_workspace.sh`: link clean HumanML3D plus MDM-specific assets/cache into the official paths.
+- `prepare/mygo_link_workspace.sh`: link clean HumanML3D plus MDM-specific assets/cache/evaluators into the official paths.
 - `model/mdm.py`: load CLIP ViT-B/32 from `mygo_data/projects/mdm/assets/text_encoders/clip` when available.
 - `.gitignore`: ignore local dataset symlinks/copies and generated `dataset/t2m_*.npy` cache files.
