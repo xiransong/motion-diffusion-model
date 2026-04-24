@@ -38,6 +38,18 @@ link_path() {
   echo "Linked: ${dst} -> ${src}"
 }
 
+optional_link_path() {
+  local src="$1"
+  local dst="$2"
+  local label="$3"
+
+  if [[ -e "${src}" ]]; then
+    link_path "${src}" "${dst}" "${label}"
+  else
+    echo "Optional ${label} not present: ${src}"
+  fi
+}
+
 link_path "${MYGO_HUMANML3D_ROOT:-"${DATA_ROOT}/datasets/humanml3d/raw/HumanML3D"}" \
   "${REPO_ROOT}/dataset/HumanML3D" \
   "HumanML3D"
@@ -54,9 +66,14 @@ link_path "${MYGO_MDM_SMPL_ROOT:-"${DATA_ROOT}/projects/mdm/assets/body_models/s
   "${REPO_ROOT}/body_models/smpl" \
   "MDM SMPL"
 
-T2M_CACHE=${MYGO_MDM_T2M_TRAIN_CACHE:-"${DATA_ROOT}/projects/mdm/cache/datasets/t2m_train.npy"}
-if [[ -e "${T2M_CACHE}" ]]; then
-  link_path "${T2M_CACHE}" "${REPO_ROOT}/dataset/t2m_train.npy" "MDM HumanML3D train cache"
-else
-  echo "Optional MDM HumanML3D train cache not present: ${T2M_CACHE}"
-fi
+optional_link_path "${MYGO_MDM_T2M_TRAIN_CACHE:-"${DATA_ROOT}/projects/mdm/cache/datasets/t2m_train.npy"}" \
+  "${REPO_ROOT}/dataset/t2m_train.npy" \
+  "MDM HumanML3D train cache"
+
+optional_link_path "${MYGO_MDM_T2M_VAL_CACHE:-"${DATA_ROOT}/projects/mdm/cache/datasets/t2m_val.npy"}" \
+  "${REPO_ROOT}/dataset/t2m_val.npy" \
+  "MDM HumanML3D val cache"
+
+optional_link_path "${MYGO_MDM_T2M_TEST_CACHE:-"${DATA_ROOT}/projects/mdm/cache/datasets/t2m_test.npy"}" \
+  "${REPO_ROOT}/dataset/t2m_test.npy" \
+  "MDM HumanML3D test cache"
